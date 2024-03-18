@@ -122,6 +122,9 @@ author:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
+    - label: "Youtube"
+      icon: "fab fa-fw fa-youtube"
+      # url: "https://youtube.com/"
 
 # Site Footer
 footer:
@@ -138,6 +141,9 @@ footer:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url:
+    - label: "Youtube"
+      icon: "fab fa-fw fa-youtube"
+      # url: 
 
 
 # Reading Files
