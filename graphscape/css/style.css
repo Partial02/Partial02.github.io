@@ -39,6 +39,18 @@
   :root:not([data-theme="light"]) { color-scheme: dark; }
 }
 :root[data-theme="dark"] { color-scheme: dark; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+  --paper: #f4f2ff; --surface: #ffffff; --surface-2: #f7f6ff; --inset: #ebe8fb;
+  --ink: #1b1840; --ink-2: #4b4878; --ink-3: #7c79a6; --rule: #dcd8f2;
+  --water: #1f7ae8; --water-soft: #dcebff; --contour: #8a3fe0; --contour-soft: #efe4ff;
+  --amber: #e47c12; --amber-soft: #ffeedd; --forest: #0fa676; --forest-soft: #dcf6ec;
+  --red: #e5295a; --red-soft: #ffe1ea;
+  --grad: linear-gradient(120deg, #1f7ae8 0%, #5a5cf0 50%, #8a3fe0 100%);
+  --glow-1: rgba(138, 63, 224, .14); --glow-2: rgba(31, 122, 232, .12);
+  color-scheme: light;
+}
+}
 :root[data-theme="light"] {
   --paper: #f4f2ff; --surface: #ffffff; --surface-2: #f7f6ff; --inset: #ebe8fb;
   --ink: #1b1840; --ink-2: #4b4878; --ink-3: #7c79a6; --rule: #dcd8f2;
@@ -475,3 +487,5 @@ details.limits > summary::before { background: var(--grad); color: #fff; }
 .meta-chip { width: 132px; flex: 0 0 auto; text-align: center; padding: 8px 8px 6px; }
 .meta-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--grad); color: #fff; font-weight: 800; font-family: var(--serif); font-size: 13px; }
 .meta-name { font-family: var(--serif); font-weight: 800; font-size: 16px; margin: 4px 0 2px; }
+
+.theme-btn { justify-content: center; }
