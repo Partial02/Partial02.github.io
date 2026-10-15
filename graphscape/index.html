@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("gs-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}</script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -20,6 +21,7 @@
   <div class="route-wrap"><div class="route-fill" id="route-fill"></div><ol class="route" id="route"></ol></div>
   <div class="rail-foot">
     <button class="btn quiet" id="open-map" type="button">전체 흐름도 보기</button>
+    <button class="btn quiet theme-btn" id="theme-btn" type="button">어두운 화면으로</button>
     <div class="timer"><span>발표 15분</span><output id="timer-out">15:00</output><button class="btn sm quiet" id="timer-btn" type="button">시작</button><button class="btn sm quiet" id="timer-reset" type="button" aria-label="타이머 초기화">↺</button></div>
   </div>
 </nav>
@@ -27,6 +29,7 @@
 <div class="topbar">
   <span class="where" id="top-where">초록</span>
   <strong id="top-pct">0%</strong>
+  <button class="btn sm" id="theme-btn-m" type="button" aria-label="화면 밝기 전환">◐</button>
   <button class="btn sm" id="open-map-m" type="button">흐름도</button>
   <div class="gauge" id="top-gauge"></div>
 </div>
