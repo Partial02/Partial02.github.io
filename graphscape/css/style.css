@@ -410,7 +410,7 @@ body {
 .wp.here .dot { border-color: var(--red); background: var(--paper); box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--red), 0 0 14px var(--red); }
 .topbar { background: color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter: blur(10px); }
 .topbar .gauge { background: var(--grad); }
-.masthead h1 { background: var(--grad-warm); -webkit-background-clip: text; background-clip: text; color: transparent; padding: 0.12em 0 0.08em; }
+.masthead h1 { background: var(--grad-warm); -webkit-background-clip: text; background-clip: text; color: transparent; padding: 0.15em 0 0.08em; }
 .sec { border-top-color: var(--rule); }
 .sec-no { background: var(--grad); color: #fff; box-shadow: 0 6px 18px var(--glow-1); }
 .plate { position: relative; border: 1px solid var(--rule); border-top: 1px solid var(--rule); border-radius: 18px; overflow: hidden; background: var(--surface); box-shadow: 0 18px 40px rgba(5, 6, 20, .28); }
