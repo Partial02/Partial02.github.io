@@ -47,7 +47,7 @@
   <header class="masthead">
     <h1>GraphScape</h1>
     <p class="subtitle">차트 여러 장을 어떤 순서로 보여줘야 가장 이해하기 쉬울까?</p>
-    <p class="byline"><b>Younghoon Kim, Kanit Wongsuphasawat, Jessica Hullman, Jeffrey Heer</b><br>CHI 2017, “GraphScape: A Model for Automated Reasoning about Visualization Similarity and Sequencing”<br>리뷰 및 체험 페이지 제작: Partial02</p>
+    <p class="byline"><b>Younghoon Kim, Kanit Wongsuphasawat, Jessica Hullman, Jeffrey Heer</b><br>CHI 2017, “GraphScape: A Model for Automated Reasoning about Visualization Similarity and Sequencing”<br>리뷰 및 체험 페이지 제작: 오예준 (데이터사이언스학과) </p>
   </header>
   <div class="prose">
     <p>GraphScape는 시각화 설계 공간을 <strong>방향 그래프</strong>로 모델링합니다. 노드는 Vega-Lite 차트 명세이고, 엣지는 한 차트를 다른 차트로 바꾸는 편집 연산이며, 각 엣지에는 “이전 차트를 본 사람이 다음 차트를 해석하는 데 드는 부담”을 뜻하는 비용이 붙습니다. 저자들은 편집 연산의 순위를 정하고 선형계획으로 비용을 수치화한 뒤, 사용자 실험에서 발견한 두 가지 선호(필터 값의 정렬, 반복되는 병렬 구조)를 더해 차트 시퀀스 전체의 비용 함수를 만들었습니다. 평가 실험에서 이 비용 순위는 사람들의 평점 순위와 스피어만 ρ = 0.8로 일치했습니다.</p>
@@ -86,7 +86,7 @@
   <div class="sec-head"><span class="sec-no">1</span><h2>문제 상황</h2></div>
   <p class="lede">2017년 이전의 시각화 자동화는 “좋은 차트 한 장”을 만드는 데 집중했습니다. 그런데 사람들은 차트를 연달아 보고, 그 사이의 변화를 해석합니다. 이 논문은 이 문제를 <strong>거리 계산</strong>과 <strong>순서 정하기</strong>라는 두 질문으로 나눕니다.</p>
   <div class="prose">
-    <p>Mackinlay의 APT(1986)부터 Voyager(2016)까지, 추천 시스템은 데이터에 맞는 효과적인 인코딩을 찾아 차트를 <strong>갤러리</strong>처럼 내놓았습니다. 하지만 탐색 중에 쌓인 차트 기록, 추천 결과 목록, 발표 슬라이드에서 사람들은 차트를 연속으로 보고, 앞 차트와 비교하며 다음 차트를 해석합니다. 이때의 부담은 개별 차트의 품질이 아니라 <strong>차트와 차트 사이의 관계</strong>에서 생깁니다.</p>
+    <p>Mackinlay의 APT(1986)부터 Wongsuphasawat 등의 Voyager(2016)까지, 추천 시스템은 데이터에 맞는 효과적인 인코딩을 찾아 차트를 <strong>갤러리</strong>처럼 내놓았습니다. 하지만 탐색 중에 쌓인 차트 기록, 추천 결과 목록, 발표 슬라이드에서 사람들은 차트를 연속으로 보고, 앞 차트와 비교하며 다음 차트를 해석합니다. 이때의 부담은 개별 차트의 품질이 아니라 <strong>차트와 차트 사이의 관계</strong>에서 생깁니다.</p>
     <p>Hullman 등(2013)은 차트를 노드, 전환을 엣지로 하는 그래프로 시퀀스를 개념화하고, 전환 종류마다 비용이 다를 것이라고 제안했습니다. 다만 그 모델은 개념 수준이었고, 실제로 계산해서 순서를 정할 수 있는 형태는 아니었습니다. GraphScape는 이것을 두 개의 계산 문제로 바꿉니다.</p>
   </div>
   <div class="qpair wide">
@@ -210,7 +210,7 @@
     <div class="plate-foot">이런 차분 제약에서는 최적해가 “판단 그래프의 최장 경로 길이”와 같아서, 이 페이지에서 선형계획을 정확히 풉니다. 범주 가정을 켜면 상위 범주의 하한이 “하위 범주 비용의 합 + m”이 됩니다.</div>
   </div>
 
-  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 리뷰어 지적 3</span></summary><ul><li><span class="who paper">논문</span><span>범주 안의 순서는 저자들의 자기 실험(삼중 비교)에서 나왔고, 모든 연산 조합을 비교하지는 않았습니다.</span></li><li><span class="who me">리뷰어</span><span>여유폭을 1로 둔 선형계획의 해는 순서 정보를 정수로 옮긴 것입니다. “비용 4는 비용 2의 두 배로 어렵다”는 비율 해석은 할 수 없습니다(체험 2의 m 슬라이더).</span></li><li><span class="who me">리뷰어</span><span>범주 제약 Σ(하위 범주) &lt; min(상위 범주)은 각 연산을 한 번씩만 쓴다는 전제입니다. 두 차트 사이 최단 경로에서는 항상 성립하지만, 시퀀스 전체에서 마크 변경이 누적되면 변환 한 번보다 비싸질 수 있습니다. 한계라기보다 적용 범위 설명이 모호한 부분입니다.</span></li><li><span class="who me">리뷰어</span><span>선형계획이 비대칭 비용(A→B ≠ B→A)을 표현할 수 있다고 했지만, 공개 코드의 추가·제거 쌍은 모두 같은 비용입니다.</span></li></ul></details>
+  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 발표자 지적 3</span></summary><ul><li><span class="who paper">논문</span><span>범주 안의 순서는 저자들의 자기 실험(삼중 비교)에서 나왔고, 모든 연산 조합을 비교하지는 않았습니다.</span></li><li><span class="who me">발표자</span><span>여유폭을 1로 둔 선형계획의 해는 순서 정보를 정수로 옮긴 것입니다. “비용 4는 비용 2의 두 배로 어렵다”는 비율 해석은 할 수 없습니다(체험 2의 m 슬라이더).</span></li><li><span class="who me">발표자</span><span>범주 제약 Σ(하위 범주) &lt; min(상위 범주)은 각 연산을 한 번씩만 쓴다는 전제입니다. 두 차트 사이 최단 경로에서는 항상 성립하지만, 시퀀스 전체에서 마크 변경이 누적되면 변환 한 번보다 비싸질 수 있습니다. 한계라기보다 적용 범위 설명이 모호한 부분입니다.</span></li><li><span class="who me">발표자</span><span>선형계획이 비대칭 비용(A→B ≠ B→A)을 표현할 수 있다고 했지만, 공개 코드의 추가·제거 쌍은 모두 같은 비용입니다.</span></li></ul></details>
   <div class="prose next-sec"><a class="btn" href="#s-study1">실험 1로</a></div>
 </section>
 
@@ -241,7 +241,7 @@
       <p class="small" id="corr-note" style="margin-top:10px"></p>
     </div>
   </div>
-  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 리뷰어 지적 3</span></summary><ul><li><span class="who paper">논문</span><span>모든 조합을 실험할 수 없어서, 순위가 불확실한 일부 조합만 골라 과제를 만들었습니다.</span></li><li><span class="who me">리뷰어</span><span>참가자가 시각화 수업 대학원생이라 일반인의 인식과 다를 수 있습니다. 실험 2는 Mechanical Turk 일반인으로 이를 보완합니다.</span></li><li><span class="who me">리뷰어</span><span>과제별 검정에 다중 비교 보정이 없습니다. 보정하면 과제 5(롤업 선호)가 유의하지 않게 됩니다(그림 4 표에서 전환).</span></li><li><span class="who me">리뷰어</span><span>과제 1, 4의 “유의하지 않음”을 “같다”로 해석해 같은 비용을 두었습니다. 엄밀한 동등성 검정은 아닙니다.</span></li></ul></details>
+  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 발표자 지적 3</span></summary><ul><li><span class="who paper">논문</span><span>모든 조합을 실험할 수 없어서, 순위가 불확실한 일부 조합만 골라 과제를 만들었습니다.</span></li><li><span class="who me">발표자</span><span>참가자가 시각화 수업 대학원생이라 일반인의 인식과 다를 수 있습니다. 실험 2는 Mechanical Turk 일반인으로 이를 보완합니다.</span></li><li><span class="who me">발표자</span><span>과제별 검정에 다중 비교 보정이 없습니다. 보정하면 과제 5(롤업 선호)가 유의하지 않게 됩니다(그림 4 표에서 전환).</span></li><li><span class="who me">발표자</span><span>과제 1, 4의 “유의하지 않음”을 “같다”로 해석해 같은 비용을 두었습니다. 엄밀한 동등성 검정은 아닙니다.</span></li></ul></details>
   <div class="prose next-sec"><a class="btn" href="#s-model">방법론 2로</a></div>
 </section>
 
@@ -306,7 +306,7 @@
             <span class="small">F 계산 방식</span>
             <div class="seg" id="m-fmode"><button type="button" aria-pressed="true" data-v="paper">논문 수식</button><button type="button" aria-pressed="false" data-v="code">공개 코드 (F ÷ 1000)</button></div>
           </div>
-          <label class="ctl">F에 곱할 배율 (리뷰어 실험용) <output id="m-fw-out">×1</output><input type="range" id="m-fw" min="0" max="6" step="1" value="0"></label>
+          <label class="ctl">F에 곱할 배율 (발표자 실험용) <output id="m-fw-out">×1</output><input type="range" id="m-fw" min="0" max="6" step="1" value="0"></label>
           <div class="readout five" style="margin-top:14px" id="m-readout"></div>
           <p class="formula-block" style="font-size:17px" id="m-formula"></p>
         </div>
@@ -319,7 +319,7 @@
     </div>
     <div class="plate-foot">비용은 공개 라이브러리의 graphscape.sequence가 계산한 720개 순서의 ΣT, W, F 값을 그대로 쓰고, 켜고 끄는 조합만 이 페이지에서 다시 합칩니다. 라이브러리 기준으로 그림 4(c)의 최적 순서는 1976년 → 1980년의 오름차순이며, 필터 점수 0.715가 논문 그림의 값과 정확히 일치합니다.</div>
   </div>
-  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 리뷰어 지적 3</span></summary><ul><li><span class="who paper">논문</span><span>F는 등호 조건 필터만 다룹니다. 범위·집합 조건은 향후 과제로 남겼습니다.</span></li><li><span class="who me">리뷰어</span><span>F(0~1)는 T(수~수십)에 비해 매우 작아 동점을 깨는 역할만 합니다. “시간 필드를 바깥 그룹으로” 같은 선호는 표현하지 못하고, 실험 2 세트 3의 실패로 이어집니다(체험 4의 F 배율 슬라이더).</span></li><li><span class="who me">리뷰어</span><span>W는 곱셈이라, 이론적으로 패턴이 시퀀스 전체를 덮으면 W = 0이 되어 전환 비용과 무관하게 최종 비용이 0이 됩니다. 이를 막는 장치가 없습니다.</span></li><li><span class="who me">리뷰어</span><span>T, F, W의 스케일과 결합 방식은 학습되지 않고 손으로 정해졌습니다. 공개 코드는 F를 1000으로 나눠 더해 논문 수식과 다릅니다.</span></li></ul></details>
+  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 발표자 지적 3</span></summary><ul><li><span class="who paper">논문</span><span>F는 등호 조건 필터만 다룹니다. 범위·집합 조건은 향후 과제로 남겼습니다.</span></li><li><span class="who me">발표자</span><span>F(0~1)는 T(수~수십)에 비해 매우 작아 동점을 깨는 역할만 합니다. “시간 필드를 바깥 그룹으로” 같은 선호는 표현하지 못하고, 실험 2 세트 3의 실패로 이어집니다(체험 4의 F 배율 슬라이더).</span></li><li><span class="who me">발표자</span><span>W는 곱셈이라, 이론적으로 패턴이 시퀀스 전체를 덮으면 W = 0이 되어 전환 비용과 무관하게 최종 비용이 0이 됩니다. 이를 막는 장치가 없습니다.</span></li><li><span class="who me">발표자</span><span>T, F, W의 스케일과 결합 방식은 학습되지 않고 손으로 정해졌습니다. 공개 코드는 F를 1000으로 나눠 더해 논문 수식과 다릅니다.</span></li></ul></details>
   <div class="prose next-sec"><a class="btn" href="#s-study2">실험 2로</a></div>
 </section>
 
@@ -365,7 +365,7 @@
     <p style="margin-top:14px">T와 W는 서로 거의 무관하고, 각각이 독립적으로 사람의 판단을 설명합니다. 실험 1 과제 7에서 “쌍별 비용만 최소화하면 과적합된다”고 판단해 W를 도입한 결정이 여기서 정량적으로 정당화됩니다.</p>
     <p class="note warn"><b>유일한 실패, 세트 3.</b> 연도와 원산지가 있는 자동차 데이터에서 55명 중 37명이 서술 응답에 시간순 배열을 언급했습니다. 사람들은 연도로 먼저 묶기를 원했지만 GraphScape는 원산지로 먼저 묶었습니다. 사람들이 선호한 시퀀스는 GraphScape에서도 2, 3위였고 비용 차이는 작았습니다.</p>
   </div>
-  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 리뷰어 지적 2</span></summary><ul><li><span class="who paper">논문</span><span>측정한 것은 선호 평점입니다. 그 순서로 봤을 때 실제로 더 잘 이해하거나 기억하는지는 향후 과제로 남겼습니다.</span></li><li><span class="who me">리뷰어</span><span>경쟁 시퀀스가 무작위 하나와 저자 제작 셋이라 기준선이 약합니다. T만 최소화한 시퀀스와 직접 대결시키지 않았습니다.</span></li><li><span class="who me">리뷰어</span><span>순위 상관은 6개 과제 × 5개 시퀀스 수준의 작은 표본에서 나온 값입니다. 세트 4는 프리드먼 검정 자체가 유의하지 않아 그 세트의 1위는 의미가 약합니다.</span></li></ul></details>
+  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 발표자 지적 2</span></summary><ul><li><span class="who paper">논문</span><span>측정한 것은 선호 평점입니다. 그 순서로 봤을 때 실제로 더 잘 이해하거나 기억하는지는 향후 과제로 남겼습니다.</span></li><li><span class="who me">발표자</span><span>경쟁 시퀀스가 무작위 하나와 저자 제작 셋이라 기준선이 약합니다. T만 최소화한 시퀀스와 직접 대결시키지 않았습니다.</span></li><li><span class="who me">발표자</span><span>순위 상관은 6개 과제 × 5개 시퀀스 수준의 작은 표본에서 나온 값입니다. 세트 4는 프리드먼 검정 자체가 유의하지 않아 그 세트의 1위는 의미가 약합니다.</span></li></ul></details>
   <div class="prose next-sec"><a class="btn" href="#s-apps">응용으로</a></div>
 </section>
 
@@ -421,7 +421,7 @@
       </div>
     </div>
   </div>
-  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 리뷰어 지적 2</span></summary><ul><li><span class="who paper">논문</span><span>경로를 너무 잘게 나누는 것이 항상 좋지는 않습니다(Heer &amp; Robertson 2007). 어디서 끊을지 찾는 문제는 향후 과제입니다.</span></li><li><span class="who me">리뷰어</span><span>순서 수가 n!로 늘고, W는 시퀀스 전체를 봐야 계산되므로 부분 경로 단위로 최적화하기 어렵습니다. 공개 코드도 모든 순서를 나열합니다(7장이면 5,040가지).</span></li><li><span class="who me">리뷰어</span><span>경로 상세화에서 같은 편집을 어떻게 나누든 총비용이 같아서, 비용 모델로는 분할의 좋고 나쁨을 가를 수 없습니다. 라이브러리는 별도의 휴리스틱 규칙 점수를 씁니다.</span></li></ul></details>
+  <details class="limits"><summary>이 단계의 한계 <span class="cnt">논문이 밝힌 것 1, 발표자 지적 2</span></summary><ul><li><span class="who paper">논문</span><span>경로를 너무 잘게 나누는 것이 항상 좋지는 않습니다(Heer &amp; Robertson 2007). 어디서 끊을지 찾는 문제는 향후 과제입니다.</span></li><li><span class="who me">발표자</span><span>순서 수가 n!로 늘고, W는 시퀀스 전체를 봐야 계산되므로 부분 경로 단위로 최적화하기 어렵습니다. 공개 코드도 모든 순서를 나열합니다(7장이면 5,040가지).</span></li><li><span class="who me">발표자</span><span>경로 상세화에서 같은 편집을 어떻게 나누든 총비용이 같아서, 비용 모델로는 분할의 좋고 나쁨을 가를 수 없습니다. 라이브러리는 별도의 휴리스틱 규칙 점수를 씁니다.</span></li></ul></details>
   <div class="prose next-sec"><a class="btn" href="#s-eval">평가로</a></div>
 </section>
 
@@ -446,13 +446,12 @@
       <li><strong>데이터 자체를 보지 않음.</strong> 비용은 명세 수준에서만 계산됩니다. 기존 필드와 강하게 상관된 필드를 추가하는 것과 무관한 필드를 추가하는 것이 같은 비용입니다.</li>
       <li><strong>선호만 측정.</strong> 사람들이 어떤 순서를 좋아하는지만 보았고, 그 순서가 이후의 의사결정이나 기억에 어떤 영향을 주는지는 측정하지 않았습니다.</li>
     </ol>
-    <p class="small">리뷰어가 추가로 지적한 한계는 각 단계 끝의 “이 단계의 한계” 토글에 정리했습니다.</p>
 
     <h3>토론거리</h3>
     <ol class="tight">
       <li>사용자들의 시퀀싱 데이터를 모아 T, F, W의 가중치를 학습한다면, 자기 실험에서 나온 순위는 얼마나 바뀔까?</li>
-      <li><span class="who me" style="display:inline-block;padding:0 8px;margin-right:4px">리뷰어 질문</span>실험 2 세트 3에서 사람들은 “연도로 먼저 묶고 그 안에서 지역을 나누는” 순서를 원했지만, 모델은 “지역으로 먼저 묶는” 순서를 골랐습니다. W는 반복 패턴이 있는지만 볼 뿐, 무엇을 기준으로 묶었는지(연도인지 지역인지)는 구분하지 못합니다. 시간처럼 자연스러운 순서가 있는 필드를 바깥 그룹으로 우선하려면, 비용 함수에 무엇을 더해야 할까?</li>
-      <li><span class="who me" style="display:inline-block;padding:0 8px;margin-right:4px">리뷰어 질문</span>경로 상세화는 시작 차트와 끝 차트 사이의 편집들을 몇 단계로 나누는 문제입니다. 그런데 어떻게 나누든 편집 비용의 합은 같습니다(같은 편집들을 묶는 방법만 다르므로, 응용 데모에서도 모든 분할의 총비용이 같습니다). 그래서 라이브러리는 비용 대신 별도 규칙 점수로 분할을 고릅니다. 애니메이션을 몇 단계로, 어디서 끊어야 하는지는 무엇을 기준으로 정해야 할까?</li>
+      <li><span class="who me" style="display:inline-block;padding:0 8px;margin-right:4px">발표자 질문</span>실험 2 세트 3에서 사람들은 “연도로 먼저 묶고 그 안에서 지역을 나누는” 순서를 원했지만, 모델은 “지역으로 먼저 묶는” 순서를 골랐습니다. W는 반복 패턴이 있는지만 볼 뿐, 무엇을 기준으로 묶었는지(연도인지 지역인지)는 구분하지 못합니다. 시간처럼 자연스러운 순서가 있는 필드를 바깥 그룹으로 우선하려면, 비용 함수에 무엇을 더해야 할까?</li>
+      <li><span class="who me" style="display:inline-block;padding:0 8px;margin-right:4px">발표자 질문</span>경로 상세화는 시작 차트와 끝 차트 사이의 편집들을 몇 단계로 나누는 문제입니다. 그런데 어떻게 나누든 편집 비용의 합은 같습니다(같은 편집들을 묶는 방법만 다르므로, 응용 데모에서도 모든 분할의 총비용이 같습니다). 그래서 라이브러리는 비용 대신 별도 규칙 점수로 분할을 고릅니다. 애니메이션을 몇 단계로, 어디서 끊어야 하는지는 무엇을 기준으로 정해야 할까?</li>
       <li>선호 평점 대신 이해도나 기억을 측정했다면 GraphScape의 순위는 여전히 이길까?</li>
     </ol>
 
@@ -505,7 +504,7 @@
       <h4>현재 설정의 최적 순서</h4>
       <div class="strip" id="meta-best"></div>
     </div>
-    <div class="plate-foot">섹션을 명세로 옮기는 방식(형식, 단위, 개념, 전제)은 리뷰어의 설계이고, 비용 수치와 F, W, S₀의 계산 방식은 논문과 공개 코드를 그대로 따랐습니다. 전제 조건을 켜면 5,040가지 중 13가지만 성립합니다.</div>
+    <div class="plate-foot">섹션을 명세로 옮기는 방식(형식, 단위, 개념, 전제)은 발표자의 설계이고, 비용 수치와 F, W, S₀의 계산 방식은 논문과 공개 코드를 그대로 따랐습니다. 전제 조건을 켜면 5,040가지 중 13가지만 성립합니다.</div>
   </div>
   <p class="foot">발표를 들어 주셔서 감사합니다.</p>
 </section>
