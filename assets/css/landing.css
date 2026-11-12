@@ -196,6 +196,89 @@
   color: rgba(156, 200, 255, 0.62);
 }
 
+/* ---------- 연구 관심사 ---------- */
+.lp-research {
+  word-break: keep-all;
+  background: #edf2fa;
+  color: var(--lp-ink);
+  font-family: var(--lp-font);
+  padding: clamp(3rem, 7vw, 5rem) clamp(1.25rem, 5vw, 4.5rem);
+}
+.lp-research__inner { max-width: 60rem; margin: 0 auto; }
+.lp-research h2 {
+  margin: 0 0 clamp(1.75rem, 3.5vw, 2.5rem);
+  font-family: var(--lp-font);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  color: var(--lp-ink);
+  border: 0;
+  padding: 0;
+}
+.lp-research__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: clamp(1.75rem, 3.5vw, 3rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lp-research__item { margin: 0; }
+.lp-research__fig {
+  padding: 1rem 0.75rem;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #d6e1f3;
+}
+.lp-research__item h3 {
+  margin: 1rem 0 0.35rem;
+  font-family: var(--lp-font);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--lp-ink);
+}
+.lp-research__item p {
+  margin: 0;
+  max-width: 30em;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--lp-muted);
+}
+
+/* 그림 공통 */
+.lp-fig { display: block; width: 100%; height: auto; overflow: visible; }
+.lp-fig line, .lp-fig path, .lp-fig polygon { stroke-linecap: round; stroke-linejoin: round; }
+.lp-fig__outer line { stroke: #9fbbe8; stroke-width: 1.6; stroke-dasharray: 4 4; }
+.lp-fig__hull { fill: #e6eefc; stroke: #3d7bff; stroke-width: 1.4; }
+.lp-fig__cluster line { stroke: #2f6fe4; stroke-width: 1.4; }
+.lp-fig__cluster circle:not(.lp-fig__hull),
+.lp-fig__nodes circle { fill: #1f4fb8; }
+.lp-fig__face polygon { fill: rgba(61, 123, 255, 0.16); stroke: none; }
+.lp-fig__edges line { stroke: #2f6fe4; stroke-width: 1.4; }
+.lp-fig__hole { fill: none; stroke: #9fbbe8; stroke-width: 1.2; stroke-dasharray: 3 4; }
+.lp-fig__links path { fill: none; stroke: #2f6fe4; stroke-width: 1.5; }
+.lp-fig__return path { fill: none; stroke: #9fbbe8; stroke-width: 1.3; stroke-dasharray: 4 4; }
+.lp-fig__arrowhead { fill: #2f6fe4; }
+.lp-fig__hub { fill: #1f4fb8; }
+.lp-fig__hubdot { fill: #9cc8ff; }
+.lp-fig__agents rect { fill: #e6eefc; stroke: #3d7bff; stroke-width: 1.4; }
+
+/* 마우스를 올리면 그림이 살짝 살아남 */
+.lp-fig * { transition: stroke 0.2s, fill 0.2s; }
+.lp-research__item:hover .lp-fig__outer line,
+.lp-research__item:hover .lp-fig__return path { stroke: #3d7bff; }
+.lp-research__item:hover .lp-fig__hull,
+.lp-research__item:hover .lp-fig__agents rect { fill: #d8e6ff; }
+.lp-research__item:hover .lp-fig__face polygon { fill: rgba(61, 123, 255, 0.26); }
+.lp-research__item:hover .lp-fig__hole { stroke: #3d7bff; }
+@media (prefers-reduced-motion: no-preference) {
+  .lp-research__item:hover .lp-fig__outer line,
+  .lp-research__item:hover .lp-fig__return path,
+  .lp-research__item:hover .lp-fig__hole { animation: lp-flow 1.2s linear infinite; }
+}
+@keyframes lp-flow { to { stroke-dashoffset: -16; } }
+
 /* ---------- 글 목록 ---------- */
 .lp-posts {
   word-break: keep-all;
@@ -205,7 +288,7 @@
   padding: clamp(3rem, 7vw, 5.5rem) clamp(1.25rem, 5vw, 4.5rem) 2rem;
 }
 .lp-posts--paged { padding-top: 2.5rem; }
-.lp-posts__inner { max-width: 50rem; margin: 0 auto; }
+.lp-posts__inner { max-width: 60rem; margin: 0 auto; }
 
 .lp-posts__head {
   display: flex;
@@ -291,5 +374,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lp-scroll i, .lp-btn, .lp-item { transition: none; }
+  .lp-scroll i, .lp-btn, .lp-item, .lp-fig * { transition: none; }
 }

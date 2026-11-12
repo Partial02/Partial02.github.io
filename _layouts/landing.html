@@ -25,6 +25,7 @@ layout: default
   <header class="lp-bar">
     <a class="lp-bar__home" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     <nav class="lp-bar__nav" aria-label="사이트 메뉴">
+      <a href="#research">Research</a>
       <a href="#posts">Posts</a>
       {%- for link in site.data.navigation.main -%}
         {%- unless link.title == "CV" -%}
@@ -51,6 +52,23 @@ layout: default
   <div class="lp-hero__foot">
     <a class="lp-scroll" href="#posts">공부 기록 {{ total }}편 보기 <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
     <p class="lp-hint" data-hint>노드에 커서를 올리면 3-hop 이웃이 그 노드로 메시지를 모읍니다. 빈 곳을 클릭하면 신호가 그래프 전체로 퍼집니다.</p>
+  </div>
+</section>
+{% endif %}
+
+{% if pg == 1 and p.interests %}
+<section class="lp-research" id="research" aria-labelledby="research-title">
+  <div class="lp-research__inner">
+    <h2 id="research-title">Research interests</h2>
+    <ul class="lp-research__list">
+      {% for it in p.interests %}
+      <li class="lp-research__item">
+        <div class="lp-research__fig">{% include interests/{{ it.figure }}.svg %}</div>
+        <h3>{{ it.title }}</h3>
+        {% if it.desc %}<p>{{ it.desc }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </section>
 {% endif %}

@@ -1,0 +1,20 @@
+<svg class="lp-fig" viewBox="0 0 240 150" role="img" aria-label="삼각형 면으로 채워진 단체 복합체와 가운데 비어 있는 고리 구조">
+  <g class="lp-fig__face">
+    <polygon points="40,96 70,48 92,104"/>
+    <polygon points="70,48 118,30 92,104"/>
+    <polygon points="162,40 206,62 186,108"/>
+  </g>
+  <g class="lp-fig__edges">
+    <line x1="40" y1="96" x2="70" y2="48"/><line x1="70" y1="48" x2="92" y2="104"/><line x1="40" y1="96" x2="92" y2="104"/>
+    <line x1="70" y1="48" x2="118" y2="30"/><line x1="118" y1="30" x2="92" y2="104"/>
+    <line x1="118" y1="30" x2="162" y2="40"/><line x1="162" y1="40" x2="206" y2="62"/>
+    <line x1="206" y1="62" x2="186" y2="108"/><line x1="186" y1="108" x2="162" y2="40"/>
+    <line x1="186" y1="108" x2="138" y2="122"/><line x1="138" y1="122" x2="92" y2="104"/>
+  </g>
+  <path class="lp-fig__hole" d="M118 54 L154 58 L166 96 L140 108 L108 96 Z"/>
+  <g class="lp-fig__nodes">
+    <circle cx="40" cy="96" r="4"/><circle cx="70" cy="48" r="4"/><circle cx="92" cy="104" r="4"/>
+    <circle cx="118" cy="30" r="4"/><circle cx="162" cy="40" r="4"/><circle cx="206" cy="62" r="4"/>
+    <circle cx="186" cy="108" r="4"/><circle cx="138" cy="122" r="4"/>
+  </g>
+</svg>

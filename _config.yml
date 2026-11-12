@@ -104,8 +104,8 @@ analytics:
 
 # Site Author
 author:
-  name             : "Yejun Oh"
-  avatar           : "/assets/images/profile_yejun.jpg"
+  name             : "Partial02"
+  avatar           : "/assets/images/profile_yejun.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "뭐든 해봐야 느는 거니까"
   location         : "SNU GSDS, South Korea"
   email            :
@@ -113,15 +113,24 @@ author:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:yejunoh@snu.ac.kr"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/yejun-oh-39b614384/"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      # url: "https://your-website.com"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/Partial02"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/yejun-oh-39b614384/"
     - label: "CV"
       icon: "fas fa-fw fa-file-pdf"
       url: "/assets/files/CV_YejunOh_2026.pdf"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      # url: "https://instagram.com/"
+    - label: "Youtube"
+      icon: "fab fa-fw fa-youtube"
+      # url: "https://youtube.com/"
 
 # Site Footer
 footer:
@@ -132,6 +141,18 @@ footer:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/yejun-oh-39b614384/"
+    - label: "GitLab"
+      icon: "fab fa-fw fa-gitlab"
+      # url:
+    - label: "Bitbucket"
+      icon: "fab fa-fw fa-bitbucket"
+      # url:
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      # url:
+    - label: "Youtube"
+      icon: "fab fa-fw fa-youtube"
+      # url: 
 
 
 # Reading Files
@@ -200,7 +221,7 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 10 # amount of posts to show
+paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 

@@ -1,0 +1,27 @@
+<svg class="lp-fig" viewBox="0 0 240 150" role="img" aria-label="작은 그래프들이 각각 하나의 노드가 되어 다시 큰 그래프를 이루는 그림">
+  <g class="lp-fig__outer">
+    <line x1="58" y1="44" x2="170" y2="34"/><line x1="58" y1="44" x2="98" y2="112"/>
+    <line x1="170" y1="34" x2="98" y2="112"/><line x1="170" y1="34" x2="196" y2="108"/>
+    <line x1="98" y1="112" x2="196" y2="108"/>
+  </g>
+  <g class="lp-fig__cluster">
+    <circle class="lp-fig__hull" cx="58" cy="44" r="27"/>
+    <line x1="46" y1="34" x2="70" y2="36"/><line x1="46" y1="34" x2="54" y2="58"/><line x1="70" y1="36" x2="54" y2="58"/>
+    <circle cx="46" cy="34" r="3.5"/><circle cx="70" cy="36" r="3.5"/><circle cx="54" cy="58" r="3.5"/>
+  </g>
+  <g class="lp-fig__cluster">
+    <circle class="lp-fig__hull" cx="170" cy="34" r="25"/>
+    <line x1="158" y1="28" x2="182" y2="26"/><line x1="182" y1="26" x2="176" y2="46"/><line x1="158" y1="28" x2="164" y2="46"/><line x1="164" y1="46" x2="176" y2="46"/>
+    <circle cx="158" cy="28" r="3.5"/><circle cx="182" cy="26" r="3.5"/><circle cx="176" cy="46" r="3.5"/><circle cx="164" cy="46" r="3.5"/>
+  </g>
+  <g class="lp-fig__cluster">
+    <circle class="lp-fig__hull" cx="98" cy="112" r="27"/>
+    <line x1="86" y1="104" x2="110" y2="104"/><line x1="98" y1="124" x2="86" y2="104"/><line x1="98" y1="124" x2="110" y2="104"/><line x1="110" y1="104" x2="116" y2="120"/>
+    <circle cx="86" cy="104" r="3.5"/><circle cx="110" cy="104" r="3.5"/><circle cx="98" cy="124" r="3.5"/><circle cx="116" cy="120" r="3.5"/>
+  </g>
+  <g class="lp-fig__cluster">
+    <circle class="lp-fig__hull" cx="196" cy="108" r="22"/>
+    <line x1="186" y1="102" x2="204" y2="100"/><line x1="196" y1="118" x2="186" y2="102"/>
+    <circle cx="186" cy="102" r="3.5"/><circle cx="204" cy="100" r="3.5"/><circle cx="196" cy="118" r="3.5"/>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg class="lp-fig" viewBox="0 0 240 150" role="img" aria-label="가운데 조율자 에이전트가 주변 에이전트들에게 작업을 보내고 결과를 받는 그림">
+  <defs>
+    <marker id="lp-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L8 4 L0 8 Z" class="lp-fig__arrowhead"/>
+    </marker>
+  </defs>
+  <g class="lp-fig__links">
+    <path d="M104 62 C80 46 66 40 54 38" marker-end="url(#lp-arrow)"/>
+    <path d="M136 62 C160 46 174 40 186 38" marker-end="url(#lp-arrow)"/>
+    <path d="M104 92 C80 108 66 114 54 114" marker-end="url(#lp-arrow)"/>
+    <path d="M136 92 C160 108 174 114 186 114" marker-end="url(#lp-arrow)"/>
+  </g>
+  <g class="lp-fig__return">
+    <path d="M58 48 C76 56 88 66 102 72" marker-end="url(#lp-arrow)"/>
+    <path d="M182 104 C164 96 152 88 138 82" marker-end="url(#lp-arrow)"/>
+  </g>
+  <rect class="lp-fig__hub" x="100" y="56" width="40" height="40" rx="10"/>
+  <circle class="lp-fig__hubdot" cx="120" cy="76" r="6"/>
+  <g class="lp-fig__agents">
+    <rect x="22" y="24" width="30" height="28" rx="7"/>
+    <rect x="188" y="24" width="30" height="28" rx="7"/>
+    <rect x="22" y="100" width="30" height="28" rx="7"/>
+    <rect x="188" y="100" width="30" height="28" rx="7"/>
+  </g>
+  <g class="lp-fig__nodes">
+    <circle cx="37" cy="38" r="3.5"/><circle cx="203" cy="38" r="3.5"/>
+    <circle cx="37" cy="114" r="3.5"/><circle cx="203" cy="114" r="3.5"/>
+  </g>
+</svg>

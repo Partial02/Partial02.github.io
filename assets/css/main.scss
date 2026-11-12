@@ -12,10 +12,13 @@ $text-color: #1c2840;
 $muted-text-color: #5d6c86;
 $primary-color: #2f6fe4;
 $border-color: #dde5f1;
-$footer-background-color: #eaf0f8;
+$footer-background-color: #071839;
 $link-color: #2457c5;
 $link-color-hover: #163f99;
 $link-color-visited: #2457c5;
+$rss-color: #6fa3ff;
+$github-color: #c9dbff;
+$linkedin-color: #6fa3ff;
 $masthead-link-color: $text-color;
 $masthead-link-color-hover: #2457c5;
 
@@ -31,3 +34,11 @@ $masthead-link-color-hover: #2457c5;
 a { text-underline-offset: 0.18em; }
 .author__avatar img { border-radius: 8px; }
 .page__content, .archive { word-break: keep-all; }
+
+/* 맨 아래(푸터): 남색 바탕, 푸른 아이콘 */
+.page__footer {
+  color: #b9c9e6;
+  border-top: 0;
+  a:hover { color: #fff; }
+  .fas, .fab, .far, .fal { color: #6fa3ff; }
+}

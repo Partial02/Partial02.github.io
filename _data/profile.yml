@@ -8,3 +8,16 @@ cv: "/assets/files/CV_YejunOh_2026.pdf"
 email: "yejunoh@snu.ac.kr"
 linkedin: "https://www.linkedin.com/in/yejun-oh-39b614384/"
 github: "https://github.com/Partial02"
+
+# 연구 관심사 (진입 화면과 공부 기록 사이에 보임)
+# figure 는 _includes/interests/ 안의 SVG 파일 이름입니다. 항목을 추가하려면 SVG 하나와 아래 항목 하나를 늘리면 됩니다.
+interests:
+  - title: "Graph-of-Graphs"
+    desc: "노드 하나하나가 다시 그래프인 계층 구조에서, 그래프 사이의 관계를 학습합니다."
+    figure: "graph-of-graphs"
+  - title: "Topological Learning"
+    desc: "단체 복합체와 고리, 구멍 같은 위상 구조를 표현 학습에 활용합니다."
+    figure: "topological-learning"
+  - title: "Agent Orchestration"
+    desc: "여러 에이전트에게 작업을 나누고 결과를 모아 하나의 시스템으로 조율합니다."
+    figure: "agent-orchestration"
