@@ -686,3 +686,34 @@ a.nt-row:hover .nt-title { color: #1f4fb8; border-bottom-color: currentColor; }
   .nt-board { grid-template-columns: repeat(4, minmax(15rem, 80vw)); }
   .lp-field-row--icon { grid-template-columns: 4.5rem 1fr; }
 }
+
+/* ---------- 프로젝트 표: 얇고 샤프하게 (한 줄 행) ---------- */
+.nt { font-size: 0.8rem; }
+.nt-tabs button { font-size: 0.76rem; padding: 0.28rem 0.55rem; }
+.nt-group { margin-top: 0.9rem; }
+.nt-group > summary { padding: 0.2rem 0.25rem; }
+.nt-count { font-size: 0.76rem; }
+.nt-scroll { margin-top: 0.25rem; }
+.nt-row { grid-template-columns: minmax(0, 1.95fr) minmax(0, 0.68fr) minmax(0, 1.42fr) minmax(0, 0.82fr) minmax(0, 0.95fr) minmax(0, 1.05fr) minmax(0, 1.55fr); }
+.nt-row--head { font-size: 0.7rem; }
+.nt-cell { flex-wrap: nowrap; overflow: hidden; padding: 0.32rem 0.55rem; }
+.nt-row--head .nt-cell { padding-top: 0.28rem; padding-bottom: 0.28rem; }
+.nt-title { font-size: 0.8rem; border-bottom-width: 0; }
+.nt-sub { font-size: 0.72rem; }
+.nt-date { font-size: 0.74rem; white-space: nowrap; }
+.nt-role { font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; line-height: 1.9; }
+.nt-pct { font-size: 0.7rem; }
+.nt-meter { height: 4px; }
+.nt-status { font-size: 0.68rem; padding: 0.05em 0.5em 0.05em 0.4em; }
+.nt-tag { font-size: 0.7rem; padding: 0.02em 0.4em; white-space: nowrap; flex: none; }
+.nt-cell.nt-tags { gap: 0.25rem; mask-image: linear-gradient(90deg, #000 85%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); }
+.nt-foot { padding: 0.3rem 0.55rem; font-size: 0.68rem; }
+.nt-table { min-width: 50em; }
+a.nt-row:focus { outline: none; }
+a.nt-row:focus-visible { outline: 2px solid var(--lp-signal); outline-offset: -2px; }
+
+/* 보드도 같은 밀도로 */
+.nt-card { padding: 0.6rem 0.7rem; gap: 0.4rem; }
+.nt-card__title { font-size: 0.82rem; }
+.nt-card__sum { font-size: 0.72rem; }
+.nt-card .nt-date { font-size: 0.7rem; }
