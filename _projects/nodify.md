@@ -6,7 +6,7 @@ start: 2026-10-12
 end:                 # 진행 중이면 비워 두세요
 progress: 10           # 0~100
 category: "Research"
-topics: ["GNN"]
+topics: ["GNN", "Graph Engineering"]
 role: "Primary author"
 summary: "Interpret an agent as a GNN node"
 ---
