@@ -87,7 +87,7 @@ layout: default
       </p>
     </div>
     {% if project_count > 0 %}
-      {% include project-table.html limit=5 %}
+      {% include project-table.html %}
     {% else %}
       <p class="lp-empty">아직 등록된 프로젝트가 없습니다.</p>
     {% endif %}
@@ -122,5 +122,5 @@ layout: default
 </section>
 
 {% if pg == 1 %}
-<script src="{{ '/assets/js/gnn-hero.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/gnn-hero.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 {% endif %}

@@ -1,22 +1,85 @@
 {%- comment -%}
-  프로젝트 표. 상태 순서(진행 중 → 계획 → 보류 → 완료), 같은 상태 안에서는 최근 시작 순.
-  include.limit 로 개수 제한.
+  노션 데이터베이스처럼 보이는 프로젝트 목록.
+  "상태별" 보기: 상태마다 접을 수 있는 그룹 표. "보드" 보기: 상태별 칸반.
 {%- endcomment -%}
-{%- assign limit = include.limit | default: 999 -%}
-{%- assign shown = 0 -%}
 {%- assign sorted = site.projects | sort: "start", "last" | reverse -%}
 {%- assign statuses = "active,planned,paused,done" | split: "," -%}
-<div class="lp-ptable" role="list">
-  <div class="lp-ptable__head" aria-hidden="true">
-    <span>프로젝트</span><span>상태</span><span>기간</span><span>진행률</span><span>분류와 주제</span>
+{%- assign labels = "진행 중,계획,보류,완료" | split: "," -%}
+
+<div class="nt" data-nt>
+  <div class="nt-tabs" role="tablist" aria-label="보기 방식">
+    <button type="button" role="tab" aria-selected="true" data-view="table"><i class="fas fa-list-ul" aria-hidden="true"></i>상태별</button>
+    <button type="button" role="tab" aria-selected="false" data-view="board"><i class="fas fa-columns" aria-hidden="true"></i>보드</button>
   </div>
-  {%- for st in statuses -%}
-    {%- assign group = sorted | where: "status", st -%}
-    {%- for pr in group -%}
-      {%- if shown < limit -%}
-      <div role="listitem">{% include project-row.html p=pr %}</div>
-      {%- assign shown = shown | plus: 1 -%}
+
+  <div class="nt-panel" data-panel="table">
+    {%- for st in statuses -%}
+      {%- assign group = sorted | where: "status", st -%}
+      {%- if group.size > 0 -%}
+      {%- assign sum = 0 -%}{%- for g in group -%}{%- assign sum = sum | plus: g.progress -%}{%- endfor -%}
+      <details class="nt-group" open>
+        <summary>
+          <i class="fas fa-caret-down nt-caret" aria-hidden="true"></i>
+          <span class="nt-status nt-status--{{ st }}">{{ labels[forloop.index0] }}</span>
+          <span class="nt-count">{{ group.size }}</span>
+        </summary>
+        <div class="nt-scroll">
+          <div class="nt-table" role="table">
+            <div class="nt-row nt-row--head" role="row">
+              <span class="nt-cell" role="columnheader"><span class="nt-hicon">Aa</span>프로젝트</span>
+              <span class="nt-cell" role="columnheader"><i class="fas fa-adjust" aria-hidden="true"></i>상태</span>
+              <span class="nt-cell" role="columnheader"><i class="far fa-calendar" aria-hidden="true"></i>기간</span>
+              <span class="nt-cell" role="columnheader"><i class="fas fa-tasks" aria-hidden="true"></i>진행률</span>
+              <span class="nt-cell" role="columnheader"><i class="far fa-user" aria-hidden="true"></i>역할</span>
+              <span class="nt-cell" role="columnheader"><i class="far fa-folder" aria-hidden="true"></i>분류</span>
+              <span class="nt-cell" role="columnheader"><i class="fas fa-tags" aria-hidden="true"></i>주제</span>
+            </div>
+            {%- for pr in group -%}{% include project-row.html p=pr %}{%- endfor -%}
+          </div>
+        </div>
+        <div class="nt-foot">평균 진행률 <b>{{ sum | divided_by: group.size }}%</b></div>
+      </details>
       {%- endif -%}
     {%- endfor -%}
-  {%- endfor -%}
+  </div>
+
+  <div class="nt-panel nt-board" data-panel="board" hidden>
+    {%- for st in statuses -%}
+      {%- assign group = sorted | where: "status", st -%}
+      <div class="nt-col">
+        <div class="nt-col__head"><span class="nt-status nt-status--{{ st }}">{{ labels[forloop.index0] }}</span><span class="nt-count">{{ group.size }}</span></div>
+        {%- for pr in group -%}
+        {%- assign prog = pr.progress | default: 0 | plus: 0 -%}
+        <a class="nt-card" href="{{ pr.url | relative_url }}">
+          <span class="nt-card__title"><span class="nt-icon" aria-hidden="true">{% if pr.icon %}{{ pr.icon }}{% else %}<i class="far fa-file-alt"></i>{% endif %}</span>{{ pr.title | escape }}</span>
+          {%- if pr.summary %}<span class="nt-card__sum">{{ pr.summary | escape }}</span>{% endif %}
+          <span class="nt-prog"><span class="nt-meter"><span style="width: {{ prog }}%"></span></span><span class="nt-pct">{{ prog }}%</span></span>
+          <span class="nt-tags">
+            {%- if pr.category -%}{%- assign c = pr.category | size | modulo: 5 -%}<span class="nt-tag nt-c{{ c }}">{{ pr.category | escape }}</span>{%- endif -%}
+            {%- for t in pr.topics -%}{%- assign c = t | size | modulo: 5 -%}<span class="nt-tag nt-c{{ c }}">{{ t | escape }}</span>{%- endfor -%}
+          </span>
+          <span class="nt-date">
+            {%- if pr.start -%}<span class="nt-nw">{{ pr.start | date: "%Y.%m.%d" }}</span>{%- endif -%}
+            {%- if pr.end %} <span class="nt-nw">→ {{ pr.end | date: "%Y.%m.%d" }}</span>{%- elsif st == "active" %} <span class="nt-nw">→ 진행 중</span>{%- endif -%}
+          </span>
+        </a>
+        {%- endfor -%}
+        {%- if group.size == 0 -%}<p class="nt-none">없음</p>{%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
 </div>
+
+<script>
+(function () {
+  var nt = document.currentScript && document.currentScript.previousElementSibling;
+  if (!nt || !nt.hasAttribute("data-nt")) return;
+  var tabs = nt.querySelectorAll("[data-view]");
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      tabs.forEach(function (t) { t.setAttribute("aria-selected", t === tab ? "true" : "false"); });
+      nt.querySelectorAll("[data-panel]").forEach(function (p) { p.hidden = p.getAttribute("data-panel") !== tab.getAttribute("data-view"); });
+    });
+  });
+})();
+</script>

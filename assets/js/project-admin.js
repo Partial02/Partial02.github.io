@@ -73,6 +73,7 @@
     var f = form.elements;
     return {
       title: f.title.value.trim(),
+      icon: f.icon.value.trim(),
       summary: f.summary.value.trim(),
       status: f.status.value,
       progress: parseInt(f.progress.value, 10) || 0,
@@ -90,6 +91,7 @@
   function toFile(d) {
     var L = ["---"];
     L.push("title: " + q(d.title));
+    if (d.icon) L.push("icon: " + q(d.icon));
     L.push("status: " + d.status + "            # active(진행 중) / planned(계획) / paused(보류) / done(완료)");
     if (d.start) L.push("start: " + d.start);
     L.push("end: " + (d.end || "") + (d.end ? "" : "                # 진행 중이면 비워 두세요"));
@@ -114,18 +116,23 @@
   }
 
   /* ---------- 미리보기 ---------- */
+  function tagColor(t) { return Array.from(String(t)).length % 5; } // Liquid의 size | modulo: 5 와 같은 규칙
   function rowHTML(d) {
     var st = STATUS[d.status] ? d.status : "active";
-    var period = ym(d.start) + (d.end ? " – " + ym(d.end) : (st === "active" ? " – 진행 중" : ""));
-    var tags = (d.category ? '<span class="lp-tag lp-tag--cat">' + esc(d.category) + "</span>" : "") +
-      d.topics.map(function (t) { return '<span class="lp-tag">' + esc(t) + "</span>"; }).join("");
-    return '<div class="lp-proj" aria-hidden="true">' +
-      '<span class="lp-proj__name"><span class="lp-proj__title">' + esc(d.title || "프로젝트 이름") + "</span>" +
-      (d.summary ? '<span class="lp-proj__sum">' + esc(d.summary) + "</span>" : "") + "</span>" +
-      '<span class="lp-proj__status"><span class="lp-status lp-status--' + st + '">' + STATUS[st] + "</span></span>" +
-      '<span class="lp-proj__period">' + esc(period) + "</span>" +
-      '<span class="lp-proj__progress"><span class="lp-meter"><span style="width:' + d.progress + '%"></span></span><span class="lp-proj__pct">' + d.progress + "%</span></span>" +
-      '<span class="lp-proj__tags">' + tags + "</span></div>";
+    var period = (d.start ? d.start.replace(/-/g, ".") : "") + (d.end ? " → " + d.end.replace(/-/g, ".") : (st === "active" ? " → 진행 중" : ""));
+    var tags = (d.category ? '<span class="nt-tag nt-c' + tagColor(d.category) + '">' + esc(d.category) + "</span>" : "") +
+      d.topics.map(function (t) { return '<span class="nt-tag nt-c' + tagColor(t) + '">' + esc(t) + "</span>"; }).join("");
+    var icon = d.icon ? esc(d.icon) : '<i class="far fa-file-alt"></i>';
+    return '<div class="nt-col nt-col--single" aria-hidden="true">' +
+      '<div class="nt-col__head"><span class="nt-status nt-status--' + st + '">' + STATUS[st] + "</span></div>" +
+      '<div class="nt-card">' +
+      '<span class="nt-card__title"><span class="nt-icon">' + icon + "</span>" + esc(d.title || "프로젝트 이름") + "</span>" +
+      (d.summary ? '<span class="nt-card__sum">' + esc(d.summary) + "</span>" : "") +
+      '<span class="nt-prog"><span class="nt-meter"><span style="width:' + d.progress + '%"></span></span><span class="nt-pct">' + d.progress + "%</span></span>" +
+      (tags ? '<span class="nt-tags">' + tags + "</span>" : "") +
+      (period ? '<span class="nt-date">' + esc(period) + "</span>" : "") +
+      (d.role ? '<span class="nt-card__sum"><i class="far fa-user" aria-hidden="true"></i> ' + esc(d.role) + "</span>" : "") +
+      "</div></div>";
   }
 
   function render() {
@@ -143,6 +150,7 @@
   function fill(pr) {
     var f = form.elements;
     f.title.value = pr.title || "";
+    f.icon.value = pr.icon || "";
     f.summary.value = pr.summary || "";
     f.status.value = STATUS[pr.status] ? pr.status : "active";
     f.progress.value = pr.progress || 0;

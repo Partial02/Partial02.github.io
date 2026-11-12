@@ -1,4 +1,4 @@
-{%- comment -%} 프로젝트 한 줄. include.p = 프로젝트 문서 {%- endcomment -%}
+{%- comment -%} 노션 표의 한 줄. include.p = 프로젝트 문서 {%- endcomment -%}
 {%- assign pr = include.p -%}
 {%- assign st = pr.status | default: "active" -%}
 {%- case st -%}
@@ -9,21 +9,23 @@
 {%- endcase -%}
 {%- assign prog = pr.progress | default: 0 | plus: 0 -%}
 {%- if prog > 100 -%}{%- assign prog = 100 -%}{%- endif -%}
-<a class="lp-proj" href="{{ pr.url | relative_url }}">
-  <span class="lp-proj__name">
-    <span class="lp-proj__title">{{ pr.title | escape }}</span>
-    {%- if pr.summary %}<span class="lp-proj__sum">{{ pr.summary | escape }}</span>{% endif %}
+<a class="nt-row" role="row" href="{{ pr.url | relative_url }}">
+  <span class="nt-cell nt-cell--title" role="cell">
+    <span class="nt-icon" aria-hidden="true">{% if pr.icon %}{{ pr.icon }}{% else %}<i class="far fa-file-alt"></i>{% endif %}</span>
+    <span class="nt-title">{{ pr.title | escape }}</span>
+    {%- if pr.summary %}<span class="nt-sub">{{ pr.summary | escape }}</span>{% endif %}
   </span>
-  <span class="lp-proj__status"><span class="lp-status lp-status--{{ st }}">{{ st_label }}</span></span>
-  <span class="lp-proj__period">
-    {%- if pr.start -%}{{ pr.start | date: "%Y.%m" }}{%- endif -%}
-    {%- if pr.end %} – {{ pr.end | date: "%Y.%m" }}{%- elsif st == "active" %} – 진행 중{%- endif -%}
+  <span class="nt-cell" role="cell"><span class="nt-status nt-status--{{ st }}">{{ st_label }}</span></span>
+  <span class="nt-cell nt-date" role="cell">
+    {%- if pr.start -%}<span class="nt-nw">{{ pr.start | date: "%Y.%m.%d" }}</span>{%- endif -%}
+    {%- if pr.end %} <span class="nt-nw">→ {{ pr.end | date: "%Y.%m.%d" }}</span>{%- elsif st == "active" %} <span class="nt-nw">→ 진행 중</span>{%- endif -%}
   </span>
-  <span class="lp-proj__progress" aria-label="진행률 {{ prog }}%">
-    <span class="lp-meter"><span style="width: {{ prog }}%"></span></span><span class="lp-proj__pct">{{ prog }}%</span>
+  <span class="nt-cell nt-prog" role="cell"><span class="nt-meter"><span style="width: {{ prog }}%"></span></span><span class="nt-pct">{{ prog }}%</span></span>
+  <span class="nt-cell nt-role" role="cell">{{ pr.role | escape }}</span>
+  <span class="nt-cell nt-tags" role="cell">
+    {%- if pr.category -%}{%- assign c = pr.category | size | modulo: 5 -%}<span class="nt-tag nt-c{{ c }}">{{ pr.category | escape }}</span>{%- endif -%}
   </span>
-  <span class="lp-proj__tags">
-    {%- if pr.category %}<span class="lp-tag lp-tag--cat">{{ pr.category | escape }}</span>{% endif -%}
-    {%- for t in pr.topics %}<span class="lp-tag">{{ t | escape }}</span>{% endfor -%}
+  <span class="nt-cell nt-tags" role="cell">
+    {%- for t in pr.topics -%}{%- assign c = t | size | modulo: 5 -%}<span class="nt-tag nt-c{{ c }}">{{ t | escape }}</span>{%- endfor -%}
   </span>
 </a>

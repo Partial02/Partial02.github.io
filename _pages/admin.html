@@ -42,10 +42,17 @@ search: false
       <form class="lp-form" data-form novalidate>
         <h3 data-mode-title>새 프로젝트</h3>
 
-        <label class="lp-field lp-field--title">
-          <span>프로젝트 이름</span>
-          <input name="title" type="text" required placeholder="예: Graph-of-Graphs 링크 예측">
-        </label>
+        <div class="lp-field-row lp-field-row--icon">
+          <label class="lp-field">
+            <span>아이콘</span>
+            <input name="icon" type="text" maxlength="4" placeholder="없음" aria-describedby="icon-help">
+          </label>
+          <label class="lp-field lp-field--title">
+            <span>프로젝트 이름</span>
+            <input name="title" type="text" required placeholder="예: Graph-of-Graphs 링크 예측">
+          </label>
+        </div>
+        <p class="lp-form__note" id="icon-help">아이콘은 이모지 하나를 넣으면 노션처럼 제목 앞에 보여요. 비워 두면 문서 아이콘이 쓰입니다.</p>
 
         <label class="lp-field">
           <span>한 줄 요약</span>
@@ -126,7 +133,7 @@ search: false
 
       <aside class="lp-preview" aria-label="미리보기">
         <h3>미리보기</h3>
-        <div class="lp-ptable lp-ptable--single" data-preview></div>
+        <div class="nt nt-preview" data-preview></div>
         <details class="lp-preview__file">
           <summary>저장될 파일 보기</summary>
           <pre data-file></pre>
@@ -143,6 +150,7 @@ search: false
   "path": {{ pr.path | jsonify }},
   "slug": {{ pr.slug | jsonify }},
   "title": {{ pr.title | jsonify }},
+  "icon": {{ pr.icon | default: "" | jsonify }},
   "summary": {{ pr.summary | default: "" | jsonify }},
   "status": {{ pr.status | default: "active" | jsonify }},
   "progress": {{ pr.progress | default: 0 | jsonify }},
@@ -157,4 +165,4 @@ search: false
 {%- endfor -%}
 ]
 </script>
-<script src="{{ '/assets/js/project-admin.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/project-admin.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
