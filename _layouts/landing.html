@@ -1,0 +1,86 @@
+---
+layout: default
+---
+{% comment %}
+  진입 화면 레이아웃. 첫 페이지에는 그래프 배경의 소개 화면을, 2쪽부터는 글 목록만 보여줍니다.
+  소개 문구와 링크는 _data/profile.yml 에서 고칩니다.
+{% endcomment %}
+{% assign p = site.data.profile %}
+{% assign total = site.posts | size %}
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+  {% assign pg = paginator.page %}
+{% else %}
+  {% assign posts = site.posts %}
+  {% assign pg = 1 %}
+{% endif %}
+
+{% if pg == 1 %}
+<style>.masthead { display: none; }</style>
+
+<section class="lp-hero" data-gnn-hero aria-label="소개">
+  <canvas class="lp-hero__graph" aria-hidden="true"></canvas>
+  <div class="lp-hero__shade" aria-hidden="true"></div>
+
+  <header class="lp-bar">
+    <a class="lp-bar__home" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <nav class="lp-bar__nav" aria-label="사이트 메뉴">
+      <a href="#posts">Posts</a>
+      {%- for link in site.data.navigation.main -%}
+        {%- unless link.title == "CV" -%}
+        <a href="{{ link.url | relative_url }}">{{ link.title }}</a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </nav>
+  </header>
+
+  <div class="lp-id">
+    <img class="lp-id__photo" src="{{ p.photo | relative_url }}" alt="{{ p.name_ko }} 프로필 사진" width="354" height="472">
+    <div class="lp-id__text">
+      <h1 class="lp-id__name">{{ p.name_en }} <span class="lp-id__ko" lang="ko">{{ p.name_ko }}</span></h1>
+      <p class="lp-id__role">{{ p.role }}<span class="lp-id__advisor">{{ p.advisor }}</span></p>
+      <ul class="lp-links">
+        <li><a class="lp-btn lp-btn--primary" href="{{ p.cv | relative_url }}" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i>CV 보기</a></li>
+        <li><a class="lp-btn" href="{{ p.linkedin }}" target="_blank" rel="noopener me"><i class="fab fa-linkedin" aria-hidden="true"></i>LinkedIn</a></li>
+        <li><a class="lp-btn" href="{{ p.github }}" target="_blank" rel="noopener me"><i class="fab fa-github" aria-hidden="true"></i>GitHub</a></li>
+        <li><a class="lp-btn" href="mailto:{{ p.email }}"><i class="fas fa-envelope" aria-hidden="true"></i>{{ p.email }}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lp-hero__foot">
+    <a class="lp-scroll" href="#posts">공부 기록 {{ total }}편 보기 <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+    <p class="lp-hint" data-hint>노드에 커서를 올리면 3-hop 이웃이 그 노드로 메시지를 모읍니다. 빈 곳을 클릭하면 신호가 그래프 전체로 퍼집니다.</p>
+  </div>
+</section>
+{% endif %}
+
+<section class="lp-posts{% if pg > 1 %} lp-posts--paged{% endif %}" id="posts" aria-labelledby="posts-title">
+  <div class="lp-posts__inner">
+    <div class="lp-posts__head">
+      <h2 id="posts-title">공부 기록</h2>
+      <p>
+        {% if pg > 1 %}{{ paginator.total_pages }}쪽 중 {{ pg }}쪽{% else %}수업과 연구를 따라가며 쓴 글 {{ total }}편{% endif %}
+        <span class="lp-posts__browse"><a href="{{ '/categories/' | relative_url }}">카테고리별</a><a href="{{ '/tags/' | relative_url }}">태그별</a></span>
+      </p>
+    </div>
+
+    <ul class="lp-list">
+      {% for post in posts %}
+      <li>
+        <a class="lp-item" href="{{ post.url | relative_url }}">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+          <span class="lp-item__title">{{ post.title | escape }}</span>
+          {% if post.categories.size > 0 %}<span class="lp-item__cat">{{ post.categories | join: ", " }}</span>{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% include paginator.html %}
+  </div>
+</section>
+
+{% if pg == 1 %}
+<script src="{{ '/assets/js/gnn-hero.js' | relative_url }}" defer></script>
+{% endif %}

@@ -1,0 +1,10 @@
+# 첫 화면(진입 화면)에 쓰이는 정보입니다. 문구는 여기서 고치면 됩니다.
+name_en: "Yejun Oh"
+name_ko: "오예준"
+role: "서울대학교 데이터사이언스대학원 석박사 통합과정"
+advisor: "지도교수 박현우"
+photo: "/assets/images/profile_yejun.jpg"
+cv: "/assets/files/CV_YejunOh_2026.pdf"
+email: "yejunoh@snu.ac.kr"
+linkedin: "https://www.linkedin.com/in/yejun-oh-39b614384/"
+github: "https://github.com/Partial02"

@@ -5,5 +5,29 @@ search: false
 
 @charset "utf-8";
 
+/* 사이트 전체 팔레트와 글꼴 (스킨보다 먼저 선언해서 덮어씀) */
+$sans-serif: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", Roboto, sans-serif;
+$background-color: #f7f9fc;
+$text-color: #1c2840;
+$muted-text-color: #5d6c86;
+$primary-color: #2f6fe4;
+$border-color: #dde5f1;
+$footer-background-color: #eaf0f8;
+$link-color: #2457c5;
+$link-color-hover: #163f99;
+$link-color-visited: #2457c5;
+$masthead-link-color: $text-color;
+$masthead-link-color-hover: #2457c5;
+
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+/* 작은 다듬기 */
+.masthead {
+  background: rgba(247, 249, 252, 0.94);
+  border-bottom: 1px solid $border-color;
+}
+.site-title { letter-spacing: -0.01em; }
+a { text-underline-offset: 0.18em; }
+.author__avatar img { border-radius: 8px; }
+.page__content, .archive { word-break: keep-all; }
