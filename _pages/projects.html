@@ -1,0 +1,23 @@
+---
+title: "Projects"
+permalink: /projects/
+layout: default
+lp_css: true
+---
+{% assign total = site.projects | size %}
+<section class="lp-projects lp-projects--page">
+  <div class="lp-projects__inner">
+    <div class="lp-posts__head lp-projects__head">
+      <h2>Projects</h2>
+      <p>
+        {% assign active_count = site.projects | where: "status", "active" | size %}
+        진행 중 {{ active_count }}개, 전체 {{ total }}개
+      </p>
+    </div>
+    {% if total > 0 %}
+      {% include project-table.html %}
+    {% else %}
+      <p class="lp-empty">아직 등록된 프로젝트가 없습니다.</p>
+    {% endif %}
+  </div>
+</section>

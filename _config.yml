@@ -280,6 +280,13 @@ compress_html:
     envs: development
 
 
+# Collections
+# 프로젝트 진행 현황: _projects/ 폴더의 파일 하나가 프로젝트 하나입니다. (/admin/ 에서 새로 만들 수 있음)
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
 # Defaults
 defaults:
   # _posts
@@ -294,5 +301,12 @@ defaults:
       share: true
       related: true
       show_date: true
+  # _projects
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+      author_profile: false
 
 date_format: "%Y-%m-%d"

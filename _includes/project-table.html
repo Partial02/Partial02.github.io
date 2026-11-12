@@ -1,0 +1,22 @@
+{%- comment -%}
+  프로젝트 표. 상태 순서(진행 중 → 계획 → 보류 → 완료), 같은 상태 안에서는 최근 시작 순.
+  include.limit 로 개수 제한.
+{%- endcomment -%}
+{%- assign limit = include.limit | default: 999 -%}
+{%- assign shown = 0 -%}
+{%- assign sorted = site.projects | sort: "start", "last" | reverse -%}
+{%- assign statuses = "active,planned,paused,done" | split: "," -%}
+<div class="lp-ptable" role="list">
+  <div class="lp-ptable__head" aria-hidden="true">
+    <span>프로젝트</span><span>상태</span><span>기간</span><span>진행률</span><span>분류와 주제</span>
+  </div>
+  {%- for st in statuses -%}
+    {%- assign group = sorted | where: "status", st -%}
+    {%- for pr in group -%}
+      {%- if shown < limit -%}
+      <div role="listitem">{% include project-row.html p=pr %}</div>
+      {%- assign shown = shown | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endfor -%}
+</div>

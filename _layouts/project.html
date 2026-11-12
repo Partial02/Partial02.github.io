@@ -1,0 +1,54 @@
+---
+layout: default
+---
+{%- assign st = page.status | default: "active" -%}
+{%- case st -%}
+  {%- when "planned" -%}{%- assign st_label = "계획" -%}
+  {%- when "paused" -%}{%- assign st_label = "보류" -%}
+  {%- when "done" -%}{%- assign st_label = "완료" -%}
+  {%- else -%}{%- assign st = "active" -%}{%- assign st_label = "진행 중" -%}
+{%- endcase -%}
+{%- assign prog = page.progress | default: 0 | plus: 0 -%}
+{%- if prog > 100 -%}{%- assign prog = 100 -%}{%- endif -%}
+
+<article class="lp-pdetail">
+  <div class="lp-pdetail__inner">
+    <a class="lp-back" href="{{ '/projects/' | relative_url }}"><i class="fas fa-chevron-left" aria-hidden="true"></i> 모든 프로젝트</a>
+    <h1>{{ page.title | escape }}</h1>
+    {% if page.summary %}<p class="lp-pdetail__sum">{{ page.summary | escape }}</p>{% endif %}
+
+    <dl class="lp-props">
+      <dt>상태</dt><dd><span class="lp-status lp-status--{{ st }}">{{ st_label }}</span></dd>
+      <dt>기간</dt>
+      <dd>
+        {%- if page.start -%}{{ page.start | date: "%Y.%m.%d" }}{%- endif -%}
+        {%- if page.end %} – {{ page.end | date: "%Y.%m.%d" }}{%- elsif st == "active" %} – 진행 중{%- endif -%}
+      </dd>
+      <dt>진행률</dt>
+      <dd class="lp-props__progress"><span class="lp-meter lp-meter--wide"><span style="width: {{ prog }}%"></span></span>{{ prog }}%</dd>
+      {% if page.category %}<dt>분류</dt><dd><span class="lp-tag lp-tag--cat">{{ page.category | escape }}</span></dd>{% endif %}
+      {% if page.topics.size > 0 %}<dt>관련 주제</dt><dd>{% for t in page.topics %}<span class="lp-tag">{{ t | escape }}</span>{% endfor %}</dd>{% endif %}
+      {% if page.role %}<dt>역할</dt><dd>{{ page.role | escape }}</dd>{% endif %}
+    </dl>
+
+    {% if page.details %}
+    <section class="lp-pdetail__body">
+      <h2>내용</h2>
+      {{ page.details | markdownify }}
+    </section>
+    {% endif %}
+    {% if content != "" %}<section class="lp-pdetail__body">{{ content }}</section>{% endif %}
+
+    {% if page.updates.size > 0 %}
+    <section class="lp-pdetail__body">
+      <h2>진행 기록</h2>
+      {% assign ups = page.updates | sort: "date" | reverse %}
+      <ol class="lp-log">
+        {% for u in ups %}
+        <li><time>{{ u.date | date: "%Y.%m.%d" }}</time><span>{{ u.text | escape }}</span></li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endif %}
+  </div>
+</article>

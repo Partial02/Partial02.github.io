@@ -1,0 +1,160 @@
+---
+title: "프로젝트 관리"
+permalink: /admin/
+layout: default
+lp_css: true
+noindex: true
+sitemap: false
+search: false
+---
+{% comment %}
+  프로젝트 관리 페이지. 저장은 GitHub에서 이뤄지므로, 저장소에 쓰기 권한이 있는 사람(본인)만 실제로 반영할 수 있습니다.
+{% endcomment %}
+{% assign p = site.data.profile %}
+<section class="lp-admin" data-repo="{{ p.repo }}" data-branch="{{ p.branch | default: 'master' }}">
+  <div class="lp-admin__inner">
+    <div class="lp-posts__head">
+      <h2>프로젝트 관리</h2>
+      <p>저장하면 GitHub 커밋 화면이 열립니다. 저장소 주인만 반영할 수 있어요.</p>
+    </div>
+
+    <div class="lp-admin__existing">
+      <h3>등록된 프로젝트</h3>
+      {% assign sorted = site.projects | sort: "start", "last" | reverse %}
+      {% if sorted.size > 0 %}
+      <ul class="lp-admin__list">
+        {% for pr in sorted %}
+        <li>
+          <span class="lp-admin__ptitle">{{ pr.title | escape }}</span>
+          <span class="lp-admin__actions">
+            <button type="button" class="lp-abtn" data-load="{{ forloop.index0 }}">불러와서 고치기</button>
+            <a class="lp-abtn lp-abtn--quiet" href="https://github.com/{{ p.repo }}/delete/{{ p.branch | default: 'master' }}/{{ pr.path }}" target="_blank" rel="noopener">삭제</a>
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="lp-empty">아직 등록된 프로젝트가 없습니다. 아래에서 첫 프로젝트를 만들어 보세요.</p>
+      {% endif %}
+    </div>
+
+    <div class="lp-admin__grid">
+      <form class="lp-form" data-form novalidate>
+        <h3 data-mode-title>새 프로젝트</h3>
+
+        <label class="lp-field lp-field--title">
+          <span>프로젝트 이름</span>
+          <input name="title" type="text" required placeholder="예: Graph-of-Graphs 링크 예측">
+        </label>
+
+        <label class="lp-field">
+          <span>한 줄 요약</span>
+          <input name="summary" type="text" placeholder="목록에 제목과 함께 보이는 짧은 설명">
+        </label>
+
+        <div class="lp-field-row">
+          <label class="lp-field">
+            <span>상태</span>
+            <select name="status">
+              <option value="active">진행 중</option>
+              <option value="planned">계획</option>
+              <option value="paused">보류</option>
+              <option value="done">완료</option>
+            </select>
+          </label>
+          <label class="lp-field">
+            <span>진행률 <output data-pct>0%</output></span>
+            <input name="progress" type="range" min="0" max="100" step="5" value="0">
+          </label>
+        </div>
+
+        <div class="lp-field-row">
+          <label class="lp-field">
+            <span>시작일</span>
+            <input name="start" type="date">
+          </label>
+          <label class="lp-field">
+            <span>종료일 <em>(진행 중이면 비워 두기)</em></span>
+            <input name="end" type="date">
+          </label>
+        </div>
+
+        <div class="lp-field-row">
+          <label class="lp-field">
+            <span>분류</span>
+            <input name="category" type="text" list="lp-categories" placeholder="예: Research">
+            <datalist id="lp-categories">
+              <option value="Research"><option value="Competition"><option value="Course"><option value="Side project">
+            </datalist>
+          </label>
+          <label class="lp-field">
+            <span>역할</span>
+            <input name="role" type="text" placeholder="예: 팀 리더">
+          </label>
+        </div>
+
+        <label class="lp-field">
+          <span>관련 주제 <em>(쉼표로 구분)</em></span>
+          <input name="topics" type="text" placeholder="예: Graph-of-Graphs, Link Prediction">
+        </label>
+
+        <label class="lp-field">
+          <span>내용 <em>(마크다운 사용 가능)</em></span>
+          <textarea name="details" rows="6" placeholder="무엇을, 왜, 어떻게 하고 있는지"></textarea>
+        </label>
+
+        <div class="lp-field">
+          <span>진행 기록</span>
+          <ol class="lp-updates" data-updates></ol>
+          <button type="button" class="lp-abtn lp-abtn--quiet" data-add-update><i class="fas fa-plus" aria-hidden="true"></i> 기록 추가</button>
+        </div>
+
+        <label class="lp-field">
+          <span>파일 이름 <em>(주소에 쓰임, 영문·숫자·하이픈)</em></span>
+          <input name="slug" type="text" pattern="[a-z0-9-]+" placeholder="자동으로 만들어집니다">
+        </label>
+
+        <p class="lp-form__error" data-error role="alert" hidden></p>
+
+        <div class="lp-form__actions">
+          <button type="submit" class="lp-abtn lp-abtn--primary" data-save>GitHub에 저장</button>
+          <button type="button" class="lp-abtn" data-copy>파일 내용 복사</button>
+          <button type="button" class="lp-abtn lp-abtn--quiet" data-reset>새로 작성</button>
+        </div>
+        <p class="lp-form__note" data-note></p>
+      </form>
+
+      <aside class="lp-preview" aria-label="미리보기">
+        <h3>미리보기</h3>
+        <div class="lp-ptable lp-ptable--single" data-preview></div>
+        <details class="lp-preview__file">
+          <summary>저장될 파일 보기</summary>
+          <pre data-file></pre>
+        </details>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="lp-projects-data">
+[
+{%- for pr in sorted -%}
+{
+  "path": {{ pr.path | jsonify }},
+  "slug": {{ pr.slug | jsonify }},
+  "title": {{ pr.title | jsonify }},
+  "summary": {{ pr.summary | default: "" | jsonify }},
+  "status": {{ pr.status | default: "active" | jsonify }},
+  "progress": {{ pr.progress | default: 0 | jsonify }},
+  "start": {% if pr.start %}{{ pr.start | date: "%Y-%m-%d" | jsonify }}{% else %}""{% endif %},
+  "end": {% if pr.end %}{{ pr.end | date: "%Y-%m-%d" | jsonify }}{% else %}""{% endif %},
+  "category": {{ pr.category | default: "" | jsonify }},
+  "role": {{ pr.role | default: "" | jsonify }},
+  "topics": {{ pr.topics | default: empty | jsonify }},
+  "details": {{ pr.details | default: "" | jsonify }},
+  "updates": [{% for u in pr.updates %}{"date": {{ u.date | date: "%Y-%m-%d" | jsonify }}, "text": {{ u.text | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+}{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]
+</script>
+<script src="{{ '/assets/js/project-admin.js' | relative_url }}" defer></script>

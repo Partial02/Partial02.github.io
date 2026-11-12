@@ -21,3 +21,7 @@ interests:
   - title: "Agent Orchestration"
     desc: "여러 에이전트에게 작업을 나누고 결과를 모아 하나의 시스템으로 조율합니다."
     figure: "agent-orchestration"
+
+# 프로젝트 관리 페이지(/admin/)가 저장할 저장소와 브랜치
+repo: "Partial02/Partial02.github.io"
+branch: "master"

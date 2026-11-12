@@ -26,9 +26,10 @@ layout: default
     <a class="lp-bar__home" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     <nav class="lp-bar__nav" aria-label="사이트 메뉴">
       <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
       <a href="#posts">Posts</a>
       {%- for link in site.data.navigation.main -%}
-        {%- unless link.title == "CV" -%}
+        {%- unless link.title == "CV" or link.title == "Projects" -%}
         <a href="{{ link.url | relative_url }}">{{ link.title }}</a>
         {%- endunless -%}
       {%- endfor -%}
@@ -69,6 +70,27 @@ layout: default
       </li>
       {% endfor %}
     </ul>
+  </div>
+</section>
+{% endif %}
+
+{% if pg == 1 %}
+{% assign project_count = site.projects | size %}
+<section class="lp-projects" id="projects" aria-labelledby="projects-title">
+  <div class="lp-projects__inner">
+    <div class="lp-posts__head lp-projects__head">
+      <h2 id="projects-title">Projects</h2>
+      <p>
+        {% assign active_count = site.projects | where: "status", "active" | size %}
+        진행 중 {{ active_count }}개, 전체 {{ project_count }}개
+        <span class="lp-posts__browse"><a href="{{ '/projects/' | relative_url }}">전체 보기</a></span>
+      </p>
+    </div>
+    {% if project_count > 0 %}
+      {% include project-table.html limit=5 %}
+    {% else %}
+      <p class="lp-empty">아직 등록된 프로젝트가 없습니다.</p>
+    {% endif %}
   </div>
 </section>
 {% endif %}
