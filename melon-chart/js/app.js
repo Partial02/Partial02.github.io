@@ -1,11 +1,34 @@
-// FastAPI 와 같은 경로(songs/top10, artists, insight)의 정적 복사본을 불러와 화면에 표시
-// (내 컴퓨터에서 export_static.py 로 생성) 서버 없이 누구나 볼 수 있습니다.
-const API_BASE = "./";
+// 내 컴퓨터의 FastAPI 서버를 Cloudflare 터널 주소로 불러와 화면에 표시
+// 터널 주소는 api.json 에 있음 (start_public.py 가 서버를 켤 때마다 갱신)
+// 서버가 꺼져 있으면 안내 문구가 나옵니다.
+let basePromise = null;
+
+function getBase() {
+  if (!basePromise) {
+    basePromise = fetch("api.json", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((cfg) => {
+        if (!cfg.base) throw new Error("API 주소가 아직 설정되지 않았습니다.");
+        return cfg.base;
+      })
+      .catch((err) => { basePromise = null; throw err; });
+  }
+  return basePromise;
+}
 
 async function getJSON(route) {
-  // 끝에 / 를 붙여 GitHub Pages 의 폴더 리다이렉트를 건너뜀
-  const res = await fetch(API_BASE + route + "/", { cache: "no-cache" });
-  if (!res.ok) throw new Error(`/${route} — HTTP ${res.status}`);
+  const base = await getBase();
+  let res;
+  try {
+    res = await fetch(base + "/" + route, { cache: "no-store" });
+  } catch (err) {
+    throw new Error("API 서버에 연결할 수 없습니다. (서버 꺼짐)");
+  }
+  if (!res.ok) {
+    let detail = "";
+    try { detail = (await res.json()).detail || ""; } catch (e) { /* 본문 없음 */ }
+    throw new Error(`/${route} — HTTP ${res.status}${detail ? " · " + detail : ""}`);
+  }
   return res.json();
 }
 
@@ -29,7 +52,7 @@ function showError(box, title, err, retry) {
   box.replaceChildren(
     el("strong", "", title),
     document.createElement("br"),
-    el("span", "", "데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."),
+    el("span", "", "API 서버가 꺼져 있을 수 있습니다. 이 API는 사이트 주인의 컴퓨터에서 실행되니, 서버가 켜져 있을 때 다시 시도해 주세요."),
     document.createElement("br"),
     el("small", "", err.message),
     document.createElement("br"),

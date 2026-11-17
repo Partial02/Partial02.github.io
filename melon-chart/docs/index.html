@@ -3,14 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Melon Top 100 API - Swagger UI</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.17.14/swagger-ui.css">
+<title>/docs · Melon Top 100 API</title>
+<link rel="stylesheet" href="/melon-chart/css/style.css?v=5">
 </head>
-<body>
-<div id="swagger-ui"></div>
-<script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.17.14/swagger-ui-bundle.js"></script>
-<script>
-  SwaggerUIBundle({ url: "../openapi.json", dom_id: "#swagger-ui", deepLinking: true });
-</script>
+<body data-path="/docs">
+<main class="wrap">
+  <p class="eyebrow">Melon Top 100 API</p>
+  <h1><code>GET /docs</code></h1>
+  <div id="msg" class="status loading" role="status">
+    <span class="spinner" aria-hidden="true"></span> API 서버로 이동하는 중…
+  </div>
+  <p class="sub"><a href="/melon-chart/">← 차트 페이지로</a></p>
+</main>
+<script src="/melon-chart/js/redirect.js?v=5"></script>
 </body>
 </html>

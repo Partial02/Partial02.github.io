@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>멜론 Top 10 · 오늘의 차트</title>
 <meta name="description" content="멜론 Top 100 차트를 FastAPI로 가공하고 Gemini로 요약한 결과를 보여주는 페이지">
-<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 <main class="wrap">
   <header>
     <p class="eyebrow">Melon Chart × FastAPI × Gemini</p>
     <h1>오늘의 멜론 Top 10</h1>
-    <p class="sub">FastAPI로 만든 API 결과를 같은 경로로 올려 보여줍니다. <span id="updated"></span></p>
+    <p class="sub">사이트 주인의 컴퓨터에서 실행 중인 FastAPI 서버에서 실시간으로 불러옵니다. <span id="updated"></span></p>
   </header>
 
   <section class="card" aria-labelledby="insight-title">
     <h2 id="insight-title">오늘의 차트 한 줄 평</h2>
     <div id="insight" class="status loading" role="status">
-      <span class="spinner" aria-hidden="true"></span> 한 줄 평을 불러오는 중…
+      <span class="spinner" aria-hidden="true"></span> Gemini가 차트를 분석하는 중…
     </div>
   </section>
 
@@ -44,6 +44,6 @@
     <a href="artists/">/artists</a> · <a href="insight/">/insight</a> · 문서: <a href="docs/">/docs</a>
   </footer>
 </main>
-<script src="js/app.js?v=4"></script>
+<script src="js/app.js?v=5"></script>
 </body>
 </html>
