@@ -87,5 +87,22 @@ code { font-family: ui-monospace, Consolas, monospace; font-size: 0.9em; }
 .title { font-weight: 600; overflow-wrap: anywhere; }
 .artist { color: var(--muted); font-size: 0.9rem; }
 
+.artists { list-style: none; margin: 0; padding: 0; }
+.artists li {
+  display: grid;
+  grid-template-columns: minmax(0, 11rem) 1fr 3.2rem;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+.artists .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.artists .track { height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
+.artists .bar { display: block; height: 100%; background: var(--accent); border-radius: 5px; }
+.artists .count { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.more { margin: 12px 0 0; color: var(--muted); font-size: 0.9rem; }
+@media (max-width: 480px) {
+  .artists li { grid-template-columns: minmax(0, 7.5rem) 1fr 2.8rem; gap: 8px; }
+}
+
 footer { margin-top: 24px; color: var(--muted); font-size: 0.85rem; }
 footer a { color: var(--accent); }
