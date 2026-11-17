@@ -1,10 +1,11 @@
-// melon-chart/data/ 폴더의 JSON 파일(내 컴퓨터에서 export_static.py 로 생성)을 불러와 화면에 표시
-// 서버 없이 정적 파일만 쓰므로 누구나 볼 수 있습니다.
-const DATA = "data/";
+// FastAPI 와 같은 경로(songs/top10, artists, insight)의 정적 복사본을 불러와 화면에 표시
+// (내 컴퓨터에서 export_static.py 로 생성) 서버 없이 누구나 볼 수 있습니다.
+const API_BASE = "./";
 
-async function getJSON(name) {
-  const res = await fetch(DATA + name, { cache: "no-cache" });
-  if (!res.ok) throw new Error(`${name} — HTTP ${res.status}`);
+async function getJSON(route) {
+  // 끝에 / 를 붙여 GitHub Pages 의 폴더 리다이렉트를 건너뜀
+  const res = await fetch(API_BASE + route + "/", { cache: "no-cache" });
+  if (!res.ok) throw new Error(`/${route} — HTTP ${res.status}`);
   return res.json();
 }
 
@@ -28,7 +29,7 @@ function showError(box, title, err, retry) {
   box.replaceChildren(
     el("strong", "", title),
     document.createElement("br"),
-    el("span", "", "데이터 파일을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."),
+    el("span", "", "데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."),
     document.createElement("br"),
     el("small", "", err.message),
     document.createElement("br"),
@@ -45,7 +46,7 @@ async function loadTop10() {
   showLoading(status, "차트를 불러오는 중…");
   list.hidden = true;
   try {
-    const songs = await getJSON("top10.json");
+    const songs = await getJSON("songs/top10");
     list.replaceChildren(...songs.map((s) => {
       const li = el("li");
       const info = el("span", "info");
@@ -64,10 +65,11 @@ async function loadInsight() {
   const box = document.getElementById("insight");
   showLoading(box, "한 줄 평을 불러오는 중…");
   try {
-    const data = await getJSON("insight.json");
+    const data = await getJSON("insight");
     box.className = "insight";
     box.textContent = data.insight;
     box.append(el("small", "meta", `${data.date} · ${data.model}`));
+    document.getElementById("updated").textContent = `데이터 기준: ${data.date}`;
   } catch (err) {
     showError(box, "한 줄 평을 불러오지 못했습니다.", err, loadInsight);
   }
@@ -83,7 +85,7 @@ async function loadArtists() {
   list.hidden = true;
   more.hidden = true;
   try {
-    const artists = await getJSON("artists.json");
+    const artists = await getJSON("artists");
     const max = artists[0] ? artists[0]["곡수"] : 1;
     list.replaceChildren(...artists.slice(0, ARTIST_LIMIT).map((a) => {
       const li = el("li");
@@ -105,15 +107,6 @@ async function loadArtists() {
   }
 }
 
-async function loadMeta() {
-  try {
-    const meta = await getJSON("meta.json");
-    document.getElementById("updated").textContent =
-      `데이터 기준: ${meta.exported_at.replace("T", " ")}`;
-  } catch (err) { /* 갱신 시각은 없어도 됨 */ }
-}
-
 loadTop10();
 loadInsight();
 loadArtists();
-loadMeta();
